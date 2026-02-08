@@ -53,7 +53,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Debug
-.npmrc
+# .npmrc with auth tokens should be ignored, but we need .npmrc for peer deps config
 
 # Misc
 .cache
