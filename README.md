@@ -1,4 +1,4 @@
-**<div align="center">
+<div align="center">
   <img src="https://img.shields.io/badge/InboxIQ-AI%20Email%20Assistant-14B8A6?style=for-the-badge&logo=gmail&logoColor=white" alt="InboxIQ">
   
   # 📧 InboxIQ - AI-Powered Email Intelligence
