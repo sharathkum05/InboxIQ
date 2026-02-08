@@ -12,7 +12,6 @@
   [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
   [![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)](https://www.prisma.io/)
   
-  [Live Demo](https://inboxiq.vercel.app) · [Report Bug](https://github.com/yourusername/inboxiq/issues) · [Request Feature](https://github.com/yourusername/inboxiq/issues)
 </div>
 
 ---
