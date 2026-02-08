@@ -26,6 +26,10 @@ dist
 
 # Vercel
 .vercel
+.vercel/
+.vercelignore
+.vercel-rebuild
+.rebuild-timestamp
 
 # Typescript
 *.tsbuildinfo
@@ -55,3 +59,12 @@ lerna-debug.log*
 .cache
 .parcel-cache
 .turbo
+
+# Docker (optional - uncomment if you don't want docker files in repo)
+# docker-compose.yml
+# Dockerfile
+# .dockerignore
+
+# Scripts (optional - uncomment if you don't want these in repo)
+# generate-secret.sh
+# setup-production.sh
