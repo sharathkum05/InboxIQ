@@ -71,6 +71,6 @@ lerna-debug.log*
 # Dockerfile
 # .dockerignore
 
-# Scripts (optional - uncomment if you don't want these in repo)
-# generate-secret.sh
-# setup-production.sh
+# Scripts that may contain credentials (keep local; use env vars)
+scripts/send-test-emails.sh
+scripts/send-fresh-test-emails.py
