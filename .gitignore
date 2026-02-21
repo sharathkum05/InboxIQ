@@ -18,11 +18,17 @@ dist
 
 # Environment Variables (CRITICAL - Contains API Keys & Secrets)
 .env
-.env*.local
+.env.*
 .env.local
+.env.development
 .env.development.local
+.env.test
 .env.test.local
+.env.production
 .env.production.local
+*.pem
+secrets/
+.secrets
 
 # Vercel
 .vercel

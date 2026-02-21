@@ -2,6 +2,8 @@ import React from "react"
 import type { Metadata } from 'next'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
+import { Toaster } from '@/components/ui/sonner'
+import { Providers } from './providers'
 
 import './globals.css'
 
@@ -39,7 +41,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>{children}</body>
+        <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+          <Providers>
+            {children}
+          </Providers>
+          <Toaster />
+        </body>
       </html>
     </ClerkProvider>
   )

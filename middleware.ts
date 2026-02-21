@@ -4,6 +4,7 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/sign-in(.*)',
   '/sign-up(.*)',
+  '/api/cron(.*)', // cron uses Bearer CRON_SECRET, validated in the route
 ])
 
 export default clerkMiddleware(async (auth, request) => {

@@ -1,0 +1,117 @@
+// InboxIQ - PostgreSQL (Supabase) + Prisma
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum SenderType {
+  PROFESSOR
+  RECRUITER
+  MANAGER
+  PEER
+  OTHER
+}
+
+enum EmailType {
+  TASK
+  SUBMISSION
+  MEETING
+  QUESTION
+  INFO
+  OTHER
+}
+
+enum PriorityLevel {
+  URGENT
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Provider {
+  GMAIL
+  SLACK
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Models
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id           String        @id // Clerk userId
+  email        String
+  name         String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  emails       Email[]
+  preferences  UserPreference?
+  oauthTokens  OAuthToken[]
+}
+
+model Email {
+  id                    String         @id @default(cuid())
+  userId                String
+  gmailMessageId       String         @unique
+  from                  String
+  fromName              String?
+  subject               String
+  body                  String         @db.Text
+  snippet               String?
+  receivedAt            DateTime
+  senderType            SenderType
+  emailType             EmailType
+  priorityLevel         PriorityLevel
+  urgencyScore          Float
+  summary               String?        @db.Text
+  draftReply            String?        @db.Text
+  deadlineDetected      DateTime?
+  actionItems           String[]
+  slackNotificationSent Boolean       @default(false)
+  notificationSentAt    DateTime?
+  processedAt           DateTime
+  dismissed             Boolean        @default(false)
+  createdAt             DateTime       @default(now())
+  user                  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserPreference {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  urgencyThreshold       Float    @default(6.0)
+  digestFrequencyMinutes Int      @default(30)
+  quietHoursStart        String?  // e.g. "22:00"
+  quietHoursEnd          String?  // e.g. "08:00"
+  slackChannel           String   @default("#general")
+  customUrgentKeywords   String[]
+  enableBatchDigest      Boolean  @default(true)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OAuthToken {
+  id           String    @id @default(cuid())
+  userId       String
+  provider     Provider
+  accessToken  String    // stored encrypted
+  refreshToken String?   // stored encrypted
+  tokenExpiry  DateTime?
+  tokenInvalid Boolean   @default(false)
+  scope        String?
+  webhookUrl   String?   // Slack incoming webhook URL (optional)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider])
+}
