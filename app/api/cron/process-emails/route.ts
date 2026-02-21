@@ -53,10 +53,18 @@ async function processUserEmails(userId: string): Promise<{
     }> = []
 
     for (const emailData of newEmails) {
+      // Skip if already in DB
       const existing = await db.email.findUnique({
         where: { gmailMessageId: emailData.gmailMessageId },
       })
-      if (existing) continue
+      // DEMO MODE: Reprocess all emails to trigger notifications
+      // if (existing) continue
+      if (existing) {
+        console.log(`[Demo] Reprocessing existing email: ${emailData.subject}`)
+        await db.email.delete({
+          where: { gmailMessageId: emailData.gmailMessageId },
+        })
+      }
 
       const classification = await classifyEmail({
         from: emailData.from,
